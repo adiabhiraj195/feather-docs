@@ -1,79 +1,164 @@
 .auth-page {
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
+    padding: 20px;
 }
 
 .auth-container {
-    padding: 20px 50px;
-    border: 1px solid grey;
-    border-radius: 10px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    padding: 40px 48px;
+    border-radius: var(--radius-lg);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    width: 500px ;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: var(--shadow-lg);
+    animation: authCardEntrance 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes authCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
 }
 
 .auth-logo {
-    width: 80px;
-    height: 80px;
-    overflow:hidden;
+    width: 72px;
+    height: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 4px;
+    margin-bottom: 12px;
+    border-radius: var(--radius-full);
+    background-color: var(--bg-secondary);
+    padding: 8px;
+    box-shadow: var(--shadow-md);
+    transition: transform var(--transition-speed) ease;
 }
 
-.auth-logo>img {
-    width: 120%;
+.auth-logo:hover {
+    transform: rotate(5deg) scale(1.05);
 }
-.auth-heading{
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin-bottom: 20px;
-}
-.password-input-container{
+
+.auth-logo > img {
     width: 100%;
-    margin-bottom: 30px;
+    height: 100%;
+    object-fit: contain;
 }
-.forgot-pass-link{
-    text-align: left;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-decoration: none;
-    color: rgb(0, 68, 255);
-    margin-left: 2px;
+
+/* Invert the black logo in dark mode automatically! */
+:root.dark .auth-logo > img {
+    filter: invert(1) brightness(1.5);
 }
-.auth-btn-container{
+
+.auth-heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 24px;
+    letter-spacing: -0.025em;
+}
+
+.password-input-container {
+    width: 100%;
+    margin-bottom: 24px;
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+}
+
+.forgot-pass-link {
+    text-align: right;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    color: var(--accent-color);
+    margin-top: 8px;
+    transition: color var(--transition-speed) ease;
+}
+
+.forgot-pass-link:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.auth-btn-container {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-top: 10px;
 }
-.auth-btn{
-    font-size: 1rem;
+
+.auth-btn {
+    font-size: 0.95rem;
     font-weight: 600;
-    padding: 5px 10px;
+    padding: 12px 24px;
     cursor: pointer;
     border: none;
-    border-radius: 6px;
-    transition: 0.3s;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-speed) ease;
+    flex: 1;
+    text-align: center;
 }
-.base-bg-btn{
-    background: none;
-    color: rgb(0, 47, 255);
+
+.base-bg-btn {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
 }
-.base-bg-btn:hover{
-    background: rgb(233, 233, 233);
+
+.base-bg-btn:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
 }
-.blue-bg-btn{
-    background-color: rgb(0, 47, 255);
+
+.blue-bg-btn {
+    background-color: var(--accent-color);
     color: white;
+    box-shadow: var(--shadow-sm);
 }
-.blue-bg-btn:hover{
-    background-color: rgb(0, 17, 255);
+
+.blue-bg-btn:hover {
+    background-color: var(--accent-hover);
+    box-shadow: var(--shadow-md);
+}
+
+.blue-bg-btn:active {
+    transform: scale(0.98);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .auth-container {
+        padding: 30px 24px;
+    }
+    
+    .auth-heading {
+        font-size: 1.5rem;
+    }
+    
+    .auth-btn-container {
+        flex-direction: column-reverse;
+        gap: 12px;
+    }
+    
+    .auth-btn {
+        width: 100%;
+    }
 }

@@ -30,14 +30,16 @@ const CreateDocumentBtn = () => {
     }
     return (
         <div className='create-document-container'>
-            <h3>Start a new document</h3>
-            <div className='create-document-card-container'>
-                <div className='create-document-card'>
-                    <div className='create-document-button' onClick={handleCreateDocument}>
-                        <img src='https://ssl.gstatic.com/docs/templates/thumbnails/docs-blank-googlecolors.png' />
-                        {loading && <Spinner/>}
+            <div className="create-document-wrapper">
+                <h3>Start a new document</h3>
+                <div className='create-document-card-container'>
+                    <div className='create-document-card'>
+                        <div className='create-document-button' onClick={handleCreateDocument}>
+                            <img src='https://ssl.gstatic.com/docs/templates/thumbnails/docs-blank-googlecolors.png' />
+                            {loading && <Spinner/>}
+                        </div>
+                        <h4>Blank</h4>
                     </div>
-                    <h4>Blank</h4>
                 </div>
             </div>
         </div>

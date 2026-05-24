@@ -1,17 +1,64 @@
-.document-editor-container{
+.document-editor-container {
     width: 100%;
-    background-color: rgb(238, 238, 238);
+    background-color: var(--bg-primary);
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 15px 150px;
+    align-items: flex-start;
+    padding: 32px 24px;
+    min-height: calc(100vh - 120px);
 }
-.editor-wrap{
-    border: 1px solid lightgray;
-    min-height: 500px;
-    width: 700px;
-    min-width: 500px;
-    background: white;
-    padding: 40px 36px;
-    border-radius: 10px;
+
+.editor-wrap {
+    border: 1px solid var(--border-color);
+    min-height: 800px;
+    width: 100%;
+    max-width: 816px; /* Standard US Letter width ratio sizing */
+    background: var(--bg-secondary);
+    padding: 60px 48px;
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    color: var(--text-primary);
+    transition: box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.editor-wrap:hover {
+    box-shadow: var(--shadow-lg);
+}
+
+/* Style the DraftJS editor text and cursor */
+.DraftEditor-root {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--text-primary);
+    min-height: 700px;
+}
+
+.public-DraftEditorPlaceholder-root {
+    color: var(--text-tertiary) !important;
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .document-editor-container {
+        padding: 16px 12px;
+    }
+    
+    .editor-wrap {
+        padding: 36px 24px;
+        min-height: 600px;
+    }
+}
+
+@media (max-width: 480px) {
+    .document-editor-container {
+        padding: 12px 8px;
+    }
+    
+    .editor-wrap {
+        padding: 24px 16px;
+        min-height: 480px;
+    }
 }

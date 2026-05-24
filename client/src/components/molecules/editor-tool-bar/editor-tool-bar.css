@@ -1,55 +1,95 @@
-.editor-tool-bar{
+.editor-tool-bar {
     width: 100%;
-    padding: 4px 20px;
-    border-bottom: 1px solid lightgray;
-    border-top: 1px solid lightgray;
+    padding: 8px 24px;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
 }
-.undo-redo-wrap{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-.undo-redo{
-    margin-left: 10px;
-    font-size: 1.2rem;
-    color: gray;
-    display: flex;
-    cursor: pointer;
-    align-items: center;
 
-}
-.undo-redo:hover{
-    color: rgb(46, 46, 46);
-}
-.share-document-window-btn{
+.undo-redo-wrap {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #c2e7ff;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-weight: 500;
-    font-size: 0.9rem;
+    gap: 8px;
+}
+
+.undo-redo {
+    font-size: 1.25rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-speed) ease;
+}
+
+.undo-redo:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-tertiary);
+}
+
+.tool-bar-operation-wrap {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.shared-user-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.share-document-window-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    font-size: 0.85rem;
     cursor: pointer;
     outline: none;
     border: none;
+    box-shadow: var(--shadow-sm);
+    transition: all var(--transition-speed) ease;
 }
-.share-document-window-btn> p{
-    margin: 0px 4px;
+
+.share-document-window-btn:hover:not(:disabled) {
+    background-color: var(--accent-hover);
+    box-shadow: var(--shadow-md);
 }
-.share-document-window-btn:hover{
-    box-shadow: 0px 0px 4px gray;
-    background-color: #b1d6ee;
+
+.share-document-window-btn:active:not(:disabled) {
+    transform: scale(0.97);
 }
-.tool-bar-operation-wrap{
-    display: flex;
-    align-items: center;
+
+.share-document-window-btn:disabled {
+    background-color: var(--border-color);
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+    box-shadow: none;
 }
-.shared-user-container {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+
+/* Mobile responsive */
+@media (max-width: 576px) {
+    .editor-tool-bar {
+        padding: 8px 16px;
+    }
+    
+    .share-document-window-btn p {
+        display: none; /* Hide 'Share' text on mobile, keep just icon */
+    }
+    
+    .share-document-window-btn {
+        padding: 8px;
+        border-radius: var(--radius-full);
+    }
 }

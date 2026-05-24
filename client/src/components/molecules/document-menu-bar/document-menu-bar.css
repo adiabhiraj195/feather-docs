@@ -1,41 +1,122 @@
-.document-menu-container{
+.document-menu-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 2px 20px;
+    padding: 8px 24px;
+    background-color: var(--bg-secondary);
 }
-.document-menu-container> div{
+
+.document-menu-container > div {
     display: flex;
+    align-items: center;
+    gap: 12px;
 }
-.document-management-btn-container{
+
+.menu-title-container {
     display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
-.management-btn{
+
+.title-input {
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    padding: 2px 6px;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    background: transparent;
+    outline: none;
+    transition: all var(--transition-speed) ease;
+    max-width: 260px;
+    width: 100%;
+}
+
+.title-input:hover {
+    border-color: var(--border-color);
+    background-color: var(--bg-primary);
+}
+
+.title-input:focus {
+    border-color: var(--accent-color);
+    background-color: var(--bg-secondary);
+    box-shadow: 0 0 0 2px var(--accent-light);
+}
+
+.document-management-btn-container {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    max-width: 100%;
+    padding-bottom: 2px;
+}
+
+/* Hide scrollbar for clean menu look but keep horizontal scroll functional */
+.document-management-btn-container::-webkit-scrollbar {
+    display: none;
+}
+
+.management-btn {
     background: none;
     border: none;
-    margin-right: 10px;
+    padding: 4px 8px;
+    border-radius: var(--radius-sm);
     font-weight: 500;
-    font-size: 0.9rem;
-    color: rgb(39, 39, 39);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
     cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--transition-speed) ease;
 }
-.management-btn:hover{
-    text-decoration: underline;
-    color: black;
+
+.management-btn:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    text-decoration: none;
 }
-.menu-title-container{
-    padding: 0px 8px;
-}
-.title-input{
-    border: none;
-    padding: 1px 4px;
+
+.saving-prop {
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 0.8rem;
+    color: var(--text-tertiary);
+    margin-left: 8px;
+    display: flex;
+    align-items: center;
 }
-.saving-prop{
-    font-weight: 400;
-    font-size: 0.9rem;
-    color: rgb(39, 39, 39);
-    margin: 0px 4px;
+
+.document-user-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .document-menu-container {
+        padding: 8px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .document-menu-container > div {
+        width: 100%;
+    }
+    
+    .document-user-container {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .document-menu-container > div {
+        gap: 8px;
+    }
+    
+    .title-input {
+        font-size: 1rem;
+        max-width: 180px;
+    }
 }

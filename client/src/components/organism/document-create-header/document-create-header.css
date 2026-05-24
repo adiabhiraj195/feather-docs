@@ -1,17 +1,58 @@
-.document-create-header{
+.document-create-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: auto;
-    padding: 8px 20px;
+    padding: 12px 24px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    gap: 16px;
 }
-.create-logo-container{
+
+.create-logo-container {
     display: flex;
     align-items: center;
+    gap: 8px;
 }
-.create-logo-container> h3{
-    font-weight: 500;
-    font-size: 1.4rem;
-    color: rgb(97, 97, 97);
-    margin-left: 6px;
+
+.create-logo-container > h3 {
+    font-weight: 600;
+    font-size: 1.35rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+}
+
+/* Invert the blue-bg logo if it's too dark, or just styling */
+:root.dark .create-logo-container img {
+    filter: brightness(1.2);
+}
+
+/* Responsive Header */
+@media (max-width: 768px) {
+    .document-create-header {
+        padding: 12px 16px;
+    }
+}
+
+@media (max-width: 576px) {
+    .document-create-header {
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    
+    .create-logo-container {
+        order: 1;
+    }
+    
+    .user-detail-container {
+        order: 2;
+    }
+    
+    .document-search-container {
+        order: 3;
+        width: 100% !important;
+        margin-top: 4px;
+    }
 }

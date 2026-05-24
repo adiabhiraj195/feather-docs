@@ -1,42 +1,91 @@
 .create-document-container {
-    /* width: 100vw; */
-    /* display: flex;
+    width: 100%;
+    background-color: var(--bg-tertiary);
+    padding: 32px 24px;
+    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: center; */
-    /* text-align: center; */
-    background-color: rgb(230, 230, 230);
-    padding: 20px 270px;
+    border-bottom: 1px solid var(--border-color);
 }
+
+.create-document-wrapper {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .create-document-container h3 {
-    font-weight: 400;
-    margin: 0px 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
 }
+
 .create-document-card-container {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 20px;
 }
-.create-document-card{
+
+.create-document-card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-start;
+    gap: 8px;
+    transition: transform var(--transition-speed) ease;
 }
-.create-document-card h4 {
-    font-weight: 600;
-}
-.create-document-button {
-    /* width: 10rem; */
-    height: 12rem;
-    margin-bottom:10px; 
-    border: 1px solid rgb(156, 156, 156);
-    cursor: pointer;
-}   
-.create-document-button:hover{
-    border: 1px solid rgb(0, 76, 218);
 
+.create-document-card:hover {
+    transform: translateY(-4px);
 }
+
+.create-document-card h4 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-left: 4px;
+}
+
+.create-document-button {
+    height: 140px;
+    width: 105px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    overflow: hidden;
+    background-color: var(--bg-secondary);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+}   
+
+.create-document-button:hover {
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-md);
+}
+
 .create-document-button img {
     height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-speed) ease;
+}
+
+.create-document-button:hover img {
+    transform: scale(1.02);
+}
+
+/* Beautiful template border styling in dark mode */
+:root.dark .create-document-button {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-color);
+}
+:root.dark .create-document-button img {
+    filter: opacity(0.85) contrast(1.1);
 }

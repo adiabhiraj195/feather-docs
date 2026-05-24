@@ -1,13 +1,25 @@
 .shared-user {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    padding: 4px 11px;
-    border-radius: 50%;
-    margin-right: 10px;
+    height: 32px;
+    width: 32px;
+    border-radius: var(--radius-full);
+    margin-right: -8px; /* Negative margin for overlapping avatars, a very modern premium avatar stack style! */
     color: white;
-    font-weight: 400;
+    font-weight: 600;
+    font-size: 0.85rem;
     cursor: pointer;
+    border: 2px solid var(--bg-secondary);
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-speed) ease, z-index 0s;
+    position: relative;
+}
+
+.shared-user:hover {
+    transform: translateY(-4px) scale(1.1);
+    z-index: 10;
+    box-shadow: var(--shadow-md);
 }
 
 .shared-user-wrap {
@@ -16,19 +28,38 @@
 
 .shared-user-popup {
     position: absolute;
-    bottom: -160%;
-    left: -150%;
-    background: lightblue;
-    z-index: 2;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    z-index: 100;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    padding: 12px;
-    border-radius: 20px;
+    justify-content: center;
+    padding: 8px 12px;
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    animation: popupFadeIn var(--transition-speed) cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
 }
-.shared-user-popup p{
+
+@keyframes popupFadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -4px);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+.shared-user-popup p {
     font-size: 0.8rem;
-    font-weight: 500;
-    margin-bottom: 10px
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
 }

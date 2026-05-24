@@ -1,5 +1,5 @@
 .document-card-menu-container {
-    position: relative;;
+    position: relative;
 }
 
 .menu-logo-container {
@@ -9,26 +9,55 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: 0.3s;
-    padding: 4px 2px;
-    border-radius: 50%;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    padding: 6px;
+    border-radius: var(--radius-full);
+    color: var(--text-secondary);
 }
-.menu-logo-container:hover{
-    background: lightgray;
+
+.menu-logo-container:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
 }
-.document-menu{
+
+.document-menu {
     position: absolute;
-    bottom: -100%;
-    left: -100%;
-    transform: translateX(-50%);
-    transform: translateY(50%);
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 8px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-md);
+    z-index: 10;
+    overflow: hidden;
+    animation: menuFadeIn 0.15s ease;
 }
-.delete-card-btn{
+
+@keyframes menuFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.delete-card-btn {
     border: none;
-    border-radius: 6px;
-    background-color: #e7e7e7;
-    font-size: 0.8rem;
-    font-weight: 500;
-    padding: 3px 5px;
-    color: rgb(46, 46, 46);
+    background: transparent;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    color: #ef4444; /* Standard Tailwind-like modern red for dangerous operations */
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    transition: background-color var(--transition-speed) ease;
+}
+
+.delete-card-btn:hover {
+    background-color: var(--bg-tertiary);
 }
