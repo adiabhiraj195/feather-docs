@@ -53,6 +53,7 @@ export const EditorProvider = ({ children }: EditorProviderInterface) => {
     const [editorState, setEditorState] = useState(defaultValue.editorState);
     const editorRef = useRef<null | Editor>(defaultValue.editorRef);
     const socket = useRef<any>(defaultValue.socket);
+    const lastLoadedId = useRef<number | null>(null);
     const { document, setDocument, saveDocument, setSaving, setCurrentUsers } = useContext(DocumentContext);
     // const { accessToken } = useAuth();
     const accessToken = localStorage.getItem('Token');
@@ -87,14 +88,21 @@ export const EditorProvider = ({ children }: EditorProviderInterface) => {
 
     //Update document state
     useEffect(() => {
-        if (document === null || document.content === null) return;
+        if (document === null) {
+            lastLoadedId.current = null;
+            return;
+        }
+        if (document.content === null) return;
 
-        try {
-            const contentState = convertFromRaw(JSON.parse(document.content) as RawDraftContentState);
-            const newEditorState = EditorState.createWithContent(contentState);
-            setEditorState(newEditorState);
-        } catch (error) {
-            console.log(error);
+        if (document.id !== lastLoadedId.current) {
+            try {
+                const contentState = convertFromRaw(JSON.parse(document.content) as RawDraftContentState);
+                const newEditorState = EditorState.createWithContent(contentState);
+                setEditorState(newEditorState);
+                lastLoadedId.current = document.id;
+            } catch (error) {
+                console.log(error);
+            }
         }
     }, [document]);
 
