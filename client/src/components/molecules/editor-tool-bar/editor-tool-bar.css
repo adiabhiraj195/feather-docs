@@ -1,23 +1,35 @@
 .editor-tool-bar {
     width: 100%;
     padding: 8px 24px;
-    background-color: var(--bg-primary);
+    background-color: var(--bg-secondary);
     border-bottom: 1px solid var(--border-color);
     border-top: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 16px;
+    position: relative;
+    z-index: 10;
 }
 
-.undo-redo-wrap {
+.editor-tool-bar-left-wrap {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-wrap: wrap; /* elegant wrapping for responsive layouts */
 }
 
-.undo-redo {
-    font-size: 1.25rem;
+/* Tool Dividers */
+.toolbar-divider {
+    width: 1px;
+    height: 18px;
+    background-color: var(--border-color);
+    margin: 0 4px;
+}
+
+/* Base Toolbar Button */
+.toolbar-btn {
+    font-size: 1.15rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
@@ -25,12 +37,175 @@
     cursor: pointer;
     padding: 6px;
     border-radius: var(--radius-sm);
+    background: transparent;
+    border: none;
+    outline: none;
     transition: all var(--transition-speed) ease;
 }
 
-.undo-redo:hover {
+.toolbar-btn:hover {
     color: var(--text-primary);
     background-color: var(--bg-tertiary);
+}
+
+.toolbar-btn.active {
+    color: var(--accent-color);
+    background-color: var(--accent-light);
+}
+
+.toolbar-btn:active {
+    transform: scale(0.92);
+}
+
+/* Custom Dropdown Trigger Styles */
+.toolbar-dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+
+.toolbar-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: transparent;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    padding: 5px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    transition: all var(--transition-speed) ease;
+}
+
+.toolbar-dropdown-trigger:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.toolbar-dropdown-trigger.active {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-hover);
+    color: var(--text-primary);
+}
+
+.toolbar-dropdown-trigger .arrow-icon {
+    font-size: 0.95rem;
+    transition: transform var(--transition-speed) ease;
+}
+
+.toolbar-dropdown-trigger.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+/* Color trigger custom bottom border hover */
+.color-trigger {
+    padding: 4px 6px;
+}
+.color-trigger .palette-icon {
+    font-size: 1.15rem;
+}
+
+/* Glassmorphism Dropdown Menu */
+.toolbar-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 155px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 50;
+    transform-origin: top;
+    animation: dropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.96);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.font-size-menu {
+    min-width: 90px;
+}
+
+.toolbar-dropdown-item {
+    text-align: left;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    width: 100%;
+    transition: all var(--transition-speed) ease;
+}
+
+.toolbar-dropdown-item:hover {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+
+.toolbar-dropdown-item.selected {
+    background-color: var(--accent-light);
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Color Picker Popover Grid styling */
+.color-picker-menu {
+    min-width: auto;
+    padding: 10px;
+}
+
+.color-picker-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.color-picker-cell {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+    outline: none;
+}
+
+.color-picker-cell:hover {
+    transform: scale(1.15);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--border-hover);
+}
+
+.color-picker-cell.selected {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 2px var(--bg-secondary), 0 0 0 4px var(--accent-color);
+}
+
+/* Undo / Redo original block styles spacing */
+.undo-redo-wrap, .inline-styles-wrap, .list-styles-wrap {
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .tool-bar-operation-wrap {
@@ -78,14 +253,68 @@
     box-shadow: none;
 }
 
-/* Mobile responsive */
-@media (max-width: 576px) {
+/* Elegant tooltips */
+.tooltip {
+    position: relative;
+}
+
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%) scale(0.9);
+    background-color: #1e293b;
+    color: #f8fafc;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.15s ease-out;
+    z-index: 60;
+    box-shadow: var(--shadow-sm);
+}
+
+.tooltip:hover::after {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+    bottom: -36px;
+}
+
+/* Mobile responsive layout */
+@media (max-width: 992px) {
     .editor-tool-bar {
-        padding: 8px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+        padding: 10px 16px;
+    }
+
+    .editor-tool-bar-left-wrap {
+        justify-content: center;
+    }
+
+    .tool-bar-operation-wrap {
+        justify-content: space-between;
+        border-top: 1px solid var(--border-color);
+        padding-top: 8px;
+    }
+}
+
+@media (max-width: 576px) {
+    .editor-tool-bar-left-wrap {
+        gap: 2px;
+    }
+    
+    .toolbar-divider {
+        margin: 0 2px;
     }
     
     .share-document-window-btn p {
-        display: none; /* Hide 'Share' text on mobile, keep just icon */
+        display: none;
     }
     
     .share-document-window-btn {

@@ -58,19 +58,28 @@ export const EditorProvider = ({ children }: EditorProviderInterface) => {
     // const { accessToken } = useAuth();
     const accessToken = localStorage.getItem('Token');
 
+    // Keep document ref in sync to avoid stale closures in event handlers
+    const documentRef = useRef(document);
+    useEffect(() => {
+        documentRef.current = document;
+    }, [document]);
+
     const handleEditorChange = (editorState: EditorState) => {
         setEditorState(editorState);
         const content = convertToRaw(editorState.getCurrentContent());
 
         socket.current.emit(SocketEvents.SEND_CHANGES, content);
 
+        const currentDoc = documentRef.current;
+        if (currentDoc === null) return;
+
         const updatedDocument = {
-            ...document,
+            ...currentDoc,
             content: JSON.stringify(content)
         } as DocumentInterface;
         setDocument(updatedDocument);
 
-        if (document === null || JSON.stringify(content) === document.content) return;
+        if (JSON.stringify(content) === currentDoc.content) return;
 
         if (saveInterval !== null) {
             clearInterval(saveInterval);
@@ -92,16 +101,23 @@ export const EditorProvider = ({ children }: EditorProviderInterface) => {
             lastLoadedId.current = null;
             return;
         }
-        if (document.content === null) return;
 
-        if (document.id !== lastLoadedId.current) {
-            try {
-                const contentState = convertFromRaw(JSON.parse(document.content) as RawDraftContentState);
-                const newEditorState = EditorState.createWithContent(contentState);
-                setEditorState(newEditorState);
-                lastLoadedId.current = document.id;
-            } catch (error) {
-                console.log(error);
+        const docId = Number(document.id);
+        const lastId = lastLoadedId.current !== null ? Number(lastLoadedId.current) : null;
+
+        if (docId !== lastId) {
+            lastLoadedId.current = docId; // Set immediately so typing never mismatches
+
+            if (document.content !== null) {
+                try {
+                    const contentState = convertFromRaw(JSON.parse(document.content) as RawDraftContentState);
+                    const newEditorState = EditorState.createWithContent(contentState);
+                    setEditorState(newEditorState);
+                } catch (error) {
+                    console.log(error);
+                }
+            } else {
+                setEditorState(EditorState.createEmpty());
             }
         }
     }, [document]);
@@ -135,9 +151,15 @@ export const EditorProvider = ({ children }: EditorProviderInterface) => {
 
         const receiveHandler = (rawContentState: RawDraftContentState) => {
             const rawContent = convertFromRaw(rawContentState);
-            const newEditorState = EditorState.createWithContent(rawContent);
-            setEditorState(newEditorState);
-            // console.log(newEditorState)
+            setEditorState(prevEditorState => {
+                const currentSelection = prevEditorState.getSelection();
+                const nextEditorState = EditorState.push(
+                    prevEditorState,
+                    rawContent,
+                    'insert-characters'
+                );
+                return EditorState.acceptSelection(nextEditorState, currentSelection);
+            });
         }
 
         socket.current.on(SocketEvents.RECEIVE_CHANGES, receiveHandler);

@@ -33,6 +33,52 @@
     min-height: 700px;
 }
 
+.DraftEditor-root h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 24px 0 12px 0;
+    line-height: 1.25;
+}
+
+.DraftEditor-root h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin: 20px 0 10px 0;
+    line-height: 1.3;
+}
+
+.DraftEditor-root h3 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 16px 0 8px 0;
+    line-height: 1.35;
+}
+
+/* Blockquote formatting */
+.editor-blockquote {
+    border-left: 4px solid var(--accent-color);
+    padding: 10px 20px;
+    margin: 16px 0;
+    color: var(--text-secondary);
+    font-style: italic;
+    background-color: var(--bg-primary);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Code block formatting */
+.editor-code-block {
+    background-color: var(--bg-primary);
+    font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    padding: 14px 18px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    margin: 16px 0;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    overflow-x: auto;
+    white-space: pre-wrap;
+}
+
 .public-DraftEditorPlaceholder-root {
     color: var(--text-tertiary) !important;
     position: absolute;
