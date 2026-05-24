@@ -1,4 +1,5 @@
-import { createContext, useState, Dispatch, SetStateAction } from "react";
+import { createContext, useState, Dispatch, SetStateAction, useEffect } from "react";
+import jwtDecode from "jwt-decode";
 
 interface AuthContextInterface {
     email: string | null;
@@ -47,7 +48,7 @@ interface AuthProviderInterface {
 export const AuthProvider = ({ children }: AuthProviderInterface) => {
     const [email, setEmail] = useState<string | null>(defaultValues.email);
     const [accessToken, setAccessToken] = useState<string | null>(
-        defaultValues.accessToken
+        localStorage.getItem('Token')
     );
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
         defaultValues.isAuthenticated
@@ -59,6 +60,28 @@ export const AuthProvider = ({ children }: AuthProviderInterface) => {
     const [errors, setErrors] = useState<Array<string>>(defaultValues.errors);
     const [userId, setUserId] = useState<number | null>(defaultValues.userId);
     const [userName, setUserName] = useState<string | null>(defaultValues.userName);
+
+    // Automatically recover and decode stored Token on browser refresh
+    useEffect(() => {
+        const token = localStorage.getItem('Token');
+        if (token) {
+            try {
+                const userData: any = jwtDecode(token);
+                if (userData && userData.user) {
+                    setUserId(userData.user.id);
+                    setEmail(userData.user.email);
+                    setUserName(userData.user.userName);
+                    setIsAuthenticated(true);
+                }
+            } catch (error) {
+                console.error("Failed to decode token on refresh:", error);
+                localStorage.removeItem('Token');
+                setAccessToken(null);
+                setIsAuthenticated(false);
+            }
+        }
+        setLoadingAuth(false);
+    }, []);
 
     return (
         <AuthContext.Provider
