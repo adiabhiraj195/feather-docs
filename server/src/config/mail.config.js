@@ -2,14 +2,17 @@ import { createTransport } from 'nodemailer';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT, 10) : 465;
+const smtpSecure = process.env.SMTP_SECURE !== undefined ? process.env.SMTP_SECURE === 'true' : smtpPort === 465;
+
 const transporter  = createTransport({
-    port: 465,
     host: process.env.SMTP_HOST,
+    port: smtpPort,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASSWORD,
     },
-    secure: true,
-})
+    secure: smtpSecure,
+});
 
-export default transporter
+export default transporter;

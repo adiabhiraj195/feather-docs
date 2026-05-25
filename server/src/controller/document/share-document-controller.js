@@ -52,7 +52,13 @@ class ShareDocumentController {
             text: `Click the following links to view and edit the document: ${process.env.FRONT_END_URL}/document/${id}`,
         };
 
-        await mailService.sendEmail(mailOptions);
+        try {
+            await mailService.sendEmail(mailOptions);
+        } catch (mailError) {
+            console.error("Failed to send sharing notification email:", mailError.message || mailError);
+            // We intentionally catch this error so that mail delivery issues (e.g., SMTP configurations, TLS mismatch)
+            // do not crash the Node server or fail the HTTP response when the DB share mapping succeeded.
+        }
 
         return res.status(200).json(documentUser);
     }
